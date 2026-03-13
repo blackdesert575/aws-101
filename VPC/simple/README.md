@@ -1,10 +1,10 @@
 # simple
 
 * Make some example from Terraform VPC module example: simple
-    * 1 region 2 az 
+    * 1 region 3 az 
         * 1 vpc
-        * 2 private subnet
-        * 2 public subnet
+        * 3 private subnet
+        * 3 public subnet
         * 1 NAT gateway for all private subnet
         * ...etc
 

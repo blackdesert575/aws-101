@@ -10,12 +10,10 @@ locals {
   region = "ap-northeast-1"
 
   vpc_cidr = "10.0.0.0/16"
-  azs      = slice(data.aws_availability_zones.available.names, 0, 3)
+  azs      = ["ap-northeast-1a", "ap-northeast-1c", "ap-northeast-1d"]
 
-  private_azs = slice(local.azs, 0, 1)
-  public_azs  = slice(local.azs, 2, 3)
-
-  subnet_pool = cidrsubnets(local.vpc_cidr, 4, 4, 4, 4)
+  private_subnets = ["10.0.1.0/24", "10.0.2.0/24", "10.0.3.0/24"]
+  public_subnets  = ["10.0.101.0/24", "10.0.102.0/24", "10.0.103.0/24"]
 
   tags = {
     Example    = local.name
@@ -32,8 +30,8 @@ module "vpc" {
   cidr = local.vpc_cidr
 
   azs             = local.azs
-  private_subnets = slice(local.subnet_pool, 0, 2)
-  public_subnets  = slice(local.subnet_pool, 2, 4)
+  private_subnets = local.private_subnets
+  public_subnets  = local.public_subnets
 
   single_nat_gateway = true
   tags = local.tags
