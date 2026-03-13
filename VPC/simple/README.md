@@ -1,7 +1,12 @@
 # simple
 
 * Make some example from Terraform VPC module example: simple
-    * There is a public and private subnet created per availability zone in addition to single NAT Gateway shared between all 3 availability zones.
+    * 1 region 2 az 
+        * 1 vpc
+        * 2 private subnet
+        * 2 public subnet
+        * 1 NAT gateway for all private subnet
+        * ...etc
 
 ## Quick Start
 
