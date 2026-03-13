@@ -18,5 +18,7 @@ $ terraform apply
 
 ## Docs
 
+* 一些參考的文件，跟使用範例
+
 * [github.com/terraform-aws-modules/terraform-aws-vpc/tree/master/examples/simple](https://github.com/terraform-aws-modules/terraform-aws-vpc/tree/master/examples/simple)
 * [hashicorp/aws/latest/docs#authentication-and-configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#authentication-and-configuration)
