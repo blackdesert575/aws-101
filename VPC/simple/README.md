@@ -1,5 +1,8 @@
 # simple
 
+* 這邊以Terraform VPC module的社群範例，來建置一個比較簡易的VPC與底下的Subnet
+    * 可用於一般的三層式架構(Three-tier architecture)
+        * 如果有更明確的目的，可以再調整底下的VPC/Subnet CIDR Range/以及是否使用一組或多組Nat Gateway或自建Nat Instance/...etc
 * Make some example from Terraform VPC module example: simple
     * 1 region 3 az 
         * 1 vpc

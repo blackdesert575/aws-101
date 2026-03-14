@@ -1,6 +1,6 @@
 provider "aws" {
   region = local.region
-  #根據使用者調整對應的AWS IAM User Profile
+  #根據授予AWS的操作使用者權限，調整對應的AWS IAM User Profile來使用Terraform建置一整組VPC
   #參考:https://registry.terraform.io/providers/hashicorp/aws/latest/docs#authentication-and-configuration
   profile = "joe"
 }
@@ -26,12 +26,19 @@ locals {
   azs      = ["ap-northeast-1a", "ap-northeast-1c", "ap-northeast-1d"]
 
   #這邊是規劃
-  #private 私有網段，基於安全的考量基本上不會讓這些網段的機器或服務有對外連網的能力，但考慮到系統建置初期或系統維護時仍有訪問外部網路的需求，因此底下多加了一個
-  #single_nat_gateway的配置方便達成前述的需求(系統建置初期或系統維護)，這個部分，可以根據實務場景進行調整，依照需求使用或者用其他方式(也可以在Public subnet自建Nat instance)實作  
+  #private 私有網段，基於安全的考量基本上不會讓這些網段的機器或服務有對外連網的能力，
+  #主要會放置一些EC2/RDS服務/Load Balancer(需要對內暴露服務用的負載平衡，提高系統可用性，可能是L7的ALB或者L3/L4的NLB)或者以下系統組件:
+  #Backend(Java spring boot API/Golang Gin API/Game service/...etc)
+  #/Database service(PostgreSQL/MySQL/Redis/Nacos/RDS for MySQL/...etc)
+  #或者kubernates的work nodes
+  #但考慮到系統建置初期或系統維護時仍有訪問外部網路的需求，因此底下多加了一個
+  #single_nat_gateway的配置方便達成前述的需求(系統建置初期或系統維護)，
+  #這個部分，可以根據實務場景進行調整，依照需求使用或者用其他方式(也可以在Public subnet自建Nat instance)實作  
   private_subnets = ["10.0.1.0/24", "10.0.2.0/24", "10.0.3.0/24"]
 
   #public
   #顧名思義，就是讓這邊的機器或服務透過 internet gateway獲得與外部網路連線的能力
+  #通常會把Bastion host(Jumpserver)/Load Balancer(需要對外暴露服務用的負載平衡 可能是L7的ALB或者L3/L4的NLB)
   #詳情:https://docs.aws.amazon.com/vpc/latest/userguide/configure-subnets.html
   public_subnets  = ["10.0.101.0/24", "10.0.102.0/24", "10.0.103.0/24"]
 
